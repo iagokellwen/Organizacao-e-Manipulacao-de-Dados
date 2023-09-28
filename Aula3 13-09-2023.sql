@@ -1,5 +1,6 @@
 // Select com Junções entre Tabelas, INNER JOIN, LEFT JOIN, RIGHT JOIN. (Banco SAKILA).
-// Autor: Ricardo Roberto de Lima.
+// Aluno: Iago kellwen
+// CD - Banco de dados
 
 // INNER JOIN:
 
