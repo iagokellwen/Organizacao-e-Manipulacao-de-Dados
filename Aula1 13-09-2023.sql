@@ -1,56 +1,56 @@
-// Funções de Agregação - comandos Select.
-// Autor: Ricardo Roberto de Lima.
+// FunÃ§Ãµes de AgregaÃ§Ã£o - comandos Select.
+// Aluno : iago kellwen
 
-01 - Qual é a receita total da loja até o momento?
+01 - Qual Ã© a receita total da loja atÃ© o momento?
 SELECT SUM(amount) AS receita_total
 FROM payment;
-Resposta: A receita total da loja até o momento é [valor].
+Resposta: A receita total da loja atÃ© o momento Ã© [valor].
 
-02 - Quantos clientes estão registrados na loja?
+02 - Quantos clientes estÃ£o registrados na loja?
 SELECT COUNT(customer_id) AS total_clientes
 FROM customer;
-Resposta: Há um total de [número] clientes registrados na loja.
+Resposta: HÃ¡ um total de [nÃºmero] clientes registrados na loja.
 
-03 - Qual é o filme mais longo na loja?
+03 - Qual Ã© o filme mais longo na loja?
 SELECT title, MAX(length) AS duracao_maxima
 FROM film;
-Resposta: O filme mais longo na loja é "[título]" com uma duração de [duração] minutos.
+Resposta: O filme mais longo na loja Ã© "[tÃ­tulo]" com uma duraÃ§Ã£o de [duraÃ§Ã£o] minutos.
 
 04 - Quantos filmes cada categoria possui?
 SELECT category.name AS categoria, COUNT(film_category.film_id) AS total_filmes
 FROM category
 LEFT JOIN film_category ON category.category_id = film_category.category_id
 GROUP BY categoria;
-Resposta: A categoria "[categoria]" possui [número] filmes.
+Resposta: A categoria "[categoria]" possui [nÃºmero] filmes.
 
-05 - Qual é a média de aluguéis por cliente?
+05 - Qual Ã© a mÃ©dia de aluguÃ©is por cliente?
 SELECT AVG(rentals_per_customer) AS media_alugueis_por_cliente
 FROM (
     SELECT customer_id, COUNT(rental_id) AS rentals_per_customer
     FROM rental
     GROUP BY customer_id
 ) AS subquery;
-Resposta: A média de aluguéis por cliente é [valor].
+Resposta: A mÃ©dia de aluguÃ©is por cliente Ã© [valor].
 
-06 - Qual é o número total de atores no banco de dados?
+06 - Qual Ã© o nÃºmero total de atores no banco de dados?
 SELECT COUNT(*) AS total_atores
 FROM actor;
 
-07 - Qual é a soma total de aluguéis de filmes até o momento?
+07 - Qual Ã© a soma total de aluguÃ©is de filmes atÃ© o momento?
 SELECT SUM(amount) AS total_alugueis
 FROM payment;
 
-08 - Qual é a duração média de todos os filmes na loja?
+08 - Qual Ã© a duraÃ§Ã£o mÃ©dia de todos os filmes na loja?
 SELECT AVG(length) AS duracao_media
 FROM film;
 
-09 - Quantos filmes foram alugados no mês de janeiro de 2006?
+09 - Quantos filmes foram alugados no mÃªs de janeiro de 2006?
 
 SELECT COUNT(*) AS total_alugueis_janeiro_2006
 FROM rental
 WHERE rental_date BETWEEN '2006-01-01' AND '2006-01-31';
 
-10 - Qual é o valor médio dos aluguéis por categoria de filme?
+10 - Qual Ã© o valor mÃ©dio dos aluguÃ©is por categoria de filme?
 SELECT category.name AS categoria, AVG(payment.amount) AS valor_medio_aluguel
 FROM payment
 JOIN rental ON payment.rental_id = rental.rental_id
@@ -60,7 +60,7 @@ JOIN film_category ON film.film_id = film_category.film_id
 JOIN category ON film_category.category_id = category.category_id
 GROUP BY categoria;
 
-11 - Qual é o ator que mais aparece em filmes?
+11 - Qual Ã© o ator que mais aparece em filmes?
 SELECT actor.actor_id, actor.first_name, actor.last_name, COUNT(film_actor.film_id) AS total_filmes_atuados
 FROM actor
 JOIN film_actor ON actor.actor_id = film_actor.actor_id
@@ -68,24 +68,24 @@ GROUP BY actor.actor_id
 ORDER BY total_filmes_atuados DESC
 LIMIT 1;
 
-12 - Quantos filmes têm uma classificação indicativa (rating) de 'PG-13'?
+12 - Quantos filmes tÃªm uma classificaÃ§Ã£o indicativa (rating) de 'PG-13'?
 SELECT COUNT(*) AS total_filmes_PG13
 FROM film
 WHERE rating = 'PG-13';
 
-13 - Qual é o dia mais movimentado em termos de aluguéis de filmes?
+13 - Qual Ã© o dia mais movimentado em termos de aluguÃ©is de filmes?
 SELECT DATE(rental_date) AS data_aluguel, COUNT(*) AS total_alugueis
 FROM rental
 GROUP BY data_aluguel
 ORDER BY total_alugueis DESC
 LIMIT 1;
 
-14 - Qual é o valor total gasto por cada cliente em aluguéis de filmes?
+14 - Qual Ã© o valor total gasto por cada cliente em aluguÃ©is de filmes?
 SELECT customer_id, SUM(amount) AS total_gasto
 FROM payment
 GROUP BY customer_id;
 
-15 - Quantos atores diferentes atuaram em filmes do gênero "Comédia"?
+15 - Quantos atores diferentes atuaram em filmes do gÃªnero "ComÃ©dia"?
 SELECT COUNT(DISTINCT actor.actor_id) AS total_atores_comedia
 FROM actor
 JOIN film_actor ON actor.actor_id = film_actor.actor_id
@@ -93,7 +93,7 @@ JOIN film_category ON film_actor.film_id = film_category.film_id
 JOIN category ON film_category.category_id = category.category_id
 WHERE category.name = 'Comedy';
 
-16 - Qual é o filme mais recente disponível para aluguel?
+16 - Qual Ã© o filme mais recente disponÃ­vel para aluguel?
 SELECT title, release_year
 FROM film
 WHERE film_id NOT IN (
@@ -111,7 +111,7 @@ FROM rental
 GROUP BY customer_id
 HAVING total_alugueis > 10;
 
-18 - Qual é o valor total dos aluguéis de cada mês em 2005?
+18 - Qual Ã© o valor total dos aluguÃ©is de cada mÃªs em 2005?
 SELECT DATE_FORMAT(rental_date, '%Y-%m') AS mes, SUM(amount) AS total_alugueis
 FROM payment
 WHERE DATE_FORMAT(rental_date, '%Y') = '2005'
@@ -125,7 +125,7 @@ WHERE film_actor.ordem = 1
 GROUP BY actor.actor_id
 ORDER BY total_filmes_atuados DESC;
 
-20 - Qual é o filme mais alugado da categoria 'Horror'?
+20 - Qual Ã© o filme mais alugado da categoria 'Horror'?
 SELECT film.title, COUNT(rental.rental_id) AS total_alugueis
 FROM film
 JOIN film_category ON film.film_id = film_category.film_id
@@ -137,7 +137,7 @@ GROUP BY film.title
 ORDER BY total_alugueis DESC
 LIMIT 1;
 
-Certifique-se de ajustar os nomes das tabelas e campos conforme necessário, caso tenha feito modificações na estrutura do banco de dados Sakila.
+Certifique-se de ajustar os nomes das tabelas e campos conforme necessÃ¡rio, caso tenha feito modificaÃ§Ãµes na estrutura do banco de dados Sakila.
 
 
 
